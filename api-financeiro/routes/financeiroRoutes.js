@@ -5,7 +5,7 @@ const financeiroController = require("../controllers/financeiroController")
 // Definir os metedos http aceitos
 router.get("/", financeiroController.listar)
 router.post("/", financeiroController.criar) 
-// router.put("/:id")
+router.put("/:id", financeiroController.alterar)
 // router.delete("/:id")
 
 module.exports = router

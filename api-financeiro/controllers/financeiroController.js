@@ -1,19 +1,80 @@
-
-// metedo para ser chamado pelo GET
+const { where } = require("sequelize")
 const { Financeiro } = require("../models")
 
-
-// Metodo para ser chamado pelo GET
-exports.listar = async (req, res) =>{
-    res.status(200).json({teste: "Testado com sucesso"})
-}
-
-// métedo para ser chamado pelo POST
-exports.criar = async (req, res) =>{
+// Método para ser chamado pelo GET
+exports.listar = async (req, res) => {
     try {
-        const registro = await  Financeiro.create(req.body)
-        res.status(201).json(registro)
-    } catch (error) {
-        res.status(500).json({erro: "Erro ao criar o registro"})
+        const registros = await Financeiro.findAll()
+        res.json(registros)
+
+    } catch (ex) {
+        res.status(500).json({ erro: "Não foi possível listar os registros" })
     }
 }
+
+// Método para ser chamado pelo POST
+exports.criar = async (req, res) => {
+    try {
+        const registro = await Financeiro.create(req.body)
+        res.status(201).json(registro);
+    } catch (listaDeErros) {
+        if (listaDeErros.name === 'SequelizeValidationError') {
+            return res.status(400).json({
+                inconsistencias: listaDeErros.errors.map(e => e.message)
+            })
+        }
+
+        res.status(500).json({ erro: "Erro ao criar o registro: " + listaDeErros })
+    }
+}
+
+// Método para ser chamado pelo PUT
+exports.alterar = async (req, res) => {
+    const id = req.params
+    try {
+
+        const [atualizado] = await Financeiro.update(req.body, {
+            where: { id }
+        })
+
+        if (atualizado) {
+            res.status(200).json({ sucesso: "Registro atualizado" })
+        } else {
+            res.status(404).json({ erro: "Registro não encontrado" })
+        }
+
+    } catch (listaDeErros) {
+        if (listaDeErros.name === 'SequelizeValidationError') {
+            return res.status(400).json({
+                inconsistencias: listaDeErros.errors.map(e => e.message)
+            })
+        }
+
+        res.status(500).json({ erro: "Erro ao alterar o registro: " + listaDeErros })
+    }
+};
+
+exports.remover = async (req, res) => {
+    const id = req.params
+    try {
+
+        const [deletado] = await Financeiro.destroy({
+            where: { id }
+        })
+
+        if (deletado) {
+            res.status(200).json({ sucesso: "Registro apagado com sucesso" })
+        } else {
+            res.status(404).json({ erro: "Registro não encontrado" })
+        }
+
+    } catch (listaDeErros) {
+        if (listaDeErros.name === 'SequelizeValidationError') {
+            return res.status(400).json({
+                inconsistencias: listaDeErros.errors.map(e => e.message)
+            })
+        }
+
+        res.status(500).json({ erro: "Erro ao alterar o registro: " + listaDeErros })
+    }
+};
