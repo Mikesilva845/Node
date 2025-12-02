@@ -6,6 +6,4 @@ const authController = require("../controllers/authController")
 router.post("/registrar", authController.registrar)
 router.post("/login", authController.login)
 
-// router.delete("/:id")
-
 module.exports = router
