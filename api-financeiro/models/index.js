@@ -18,18 +18,10 @@ Usuario.hasMany(Financeiro, { foreignKey: "usuarioId" })
 Financeiro.belongsTo(Usuario, { foreignKey: "usuarioId" })
 
 // Uma categoria pode ter muitos lançanemnto financeiros
-Categoria.hasMany(Financeiro, { foreignKey: "categoriaId" } )
+Categoria.hasMany(Financeiro, { foreignKey: "categoriaId" })
 
 // Um lançamneto financeiro esta relacionado a uma unica categoria
-Financeiro.belongsTo( Categoria , { foreignKey: "categoriaId" } )
+Financeiro.belongsTo(Categoria, { foreignKey: "categoriaId" })
 
 
-module.exports = {conexaoBanco, Usuario, Financeiro, Categoria }
-
-
-
-
-
-
-
-
+module.exports = { conexaoBanco, Usuario, Financeiro, Categoria }

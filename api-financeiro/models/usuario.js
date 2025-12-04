@@ -7,7 +7,7 @@ module.exports = (conexaoBanco) => {
         nome: DataTypes.STRING,
         email: { type: DataTypes.STRING, unique: true },
         senha: DataTypes.STRING,
-    },{
+    }, {
         tableName: "usuarios"
     })
 

@@ -7,13 +7,8 @@ exports.listar = async (req, res) => {
     const usuarioIdRecuperado = req.usuarioId
 
     try {
-        const registros = await Categoria.findAll({
-            where: {
-                usuarioId: usuarioIdRecuperado
-            }
-        })
+        const registros = await Categoria.findAll()
         res.json(registros)
-
     } catch (ex) {
         res.status(500).json({ erro: "Não foi possivel listar os registro" })
     }

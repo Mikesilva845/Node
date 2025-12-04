@@ -12,8 +12,8 @@ exports.login = async (req, res) => {
     const { email, senha } = req.body
     const usuario = await Usuario.findOne({ where: { email } })
 
-    if (!usuario || !(await bcrypt.compare(senha, usuario.senha)) ){
-        return res.status(401).json({ erro: "Credenciais inválidas"})
+    if (!usuario || !(await bcrypt.compare(senha, usuario.senha))) {
+        return res.status(401).json({ erro: "Credenciais inválidas" })
     }
 
     // Caso os dados estejam corretos
